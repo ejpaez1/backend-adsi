@@ -1,7 +1,7 @@
 //Usamos ecmascript 6+ para importar los módulos -> agregar el "type": "module" a el package-json
 //express es un framework de node para crear el servidor
 import express from 'express';
-//Cors nos brinda seguridad
+//Cors nos brinda seguridad l
 import cors from 'cors';
 //Usamos dotenv para no tener que colocar un puerto en específico
 import {} from 'dotenv/config.js';
