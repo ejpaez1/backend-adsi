@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { categoryGet } from "../controllers/category.js";
+import { categoryGet, categoryPost, categoryById } from "../controllers/category.js";
 
 const router = Router();
 
 router.get("/", categoryGet);
 
-router.get("/:id");
+router.get("/:id", categoryById);
 
-router.post("/");
+router.post("/", categoryPost);
 
 router.put("/");
 
