@@ -28,7 +28,7 @@ const categoryById = async (req, res) => {
   const { id } = req.params;
   const category = await category.findOne({ _id: id });
   res.json({
-
+    category
   })
 };
 
