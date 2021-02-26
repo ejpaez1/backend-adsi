@@ -17,7 +17,7 @@ class Server {
     this.routes();
   }
   routes() {
-    this.app.use("/api/categoria", category);
+    this.app.use("/api/category", category);
   }
 
   async myConnection() {
