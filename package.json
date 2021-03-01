@@ -4,8 +4,7 @@
   "description": "Sistema de compraventa adsi",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app"
+    "start": "node app"
   },
   "type": "module",
   "author": "Edwin J. Páez",
