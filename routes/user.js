@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   userAdd,
   userGet,
-  userModify,
+  userUpdate,
   userDelete,
   userGetById,
   stateEnable,
@@ -17,7 +17,7 @@ router.get("/:id", userGetById);
 //Añadir usuario
 router.post("/", userAdd);
 //Modificar usuario
-router.put("/:id", userModify);
+router.put("/:id", userUpdate);
 //Eliminar usuario
 router.delete("/:id", userDelete);
 //Eliminar usuario

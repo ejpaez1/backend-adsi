@@ -30,7 +30,7 @@ const userAdd = async (req, res) => {
   });
 };
 //Modificar usuario
-const userModify = async (req, res) => {
+const userUpdate = async (req, res) => {
   const { id } = req.params;
   const { _id, __v, state, createdAt, email, ...remains } = req.body
   remains.password = bcrypt.hashSync(remains.password, 10);
@@ -65,4 +65,4 @@ const stateDisable = async (req, res) => {
   });
 };
 
-export { userGet, userGetById, userAdd, userModify, userDelete, stateEnable, stateDisable };
+export { userGet, userGetById, userAdd, userUpdate, userDelete, stateEnable, stateDisable };
