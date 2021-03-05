@@ -1,25 +1,18 @@
 import { Router } from "express";
-import {
-  userAdd,
-  userGet,
-  userUpdate,
-  userGetById,
-  stateEnable,
-  stateDisable
-} from "../controllers/user.js";
+import user from "../controllers/user.js";
 
 const router = Router();
 //Obtener usuario
-router.get("/", userGet);
+router.get("/", user.userGet);
 //Obtener usuario por ID
-router.get("/:id", userGetById);
+router.get("/:id", user.userGetById);
 //Añadir usuario
-router.post("/", userAdd);
+router.post("/", user.userAdd);
 //Modificar usuario
-router.put("/:id", userUpdate);
-//Eliminar usuario
-router.put("/enable/:id", stateEnable);
-//Eliminar usuario
-router.put("/disable/:id", stateDisable);
+router.put("/:id", user.userUpdate);
+//activar usuario
+router.put("/enable/:id", user.stateEnable);
+//desactivar usuario
+router.put("/disable/:id", user.stateDisable);
 
 export default router;

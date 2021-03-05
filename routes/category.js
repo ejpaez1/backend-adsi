@@ -1,28 +1,20 @@
 import { Router } from "express";
-import {
-  categoryGet,
-  categoryAdd,
-  categoryGetById,
-  categoryModify,
-  stateEnable,
-  stateDisable,
-  categoryDelete,
-} from "../controllers/category.js";
+import category from "../controllers/category.js";
 
 const router = Router();
 //Obtener información por medio de palabras de un item
-router.get("/", categoryGet);
+router.get("/", category.categoryGet);
 //Obtener información por medio del ID de un item
-router.get("/:id", categoryGetById);
+router.get("/:id", category.categoryGetById);
 //Insertar item
-router.post("/", categoryAdd);
+router.post("/", category.categoryAdd);
 //Actualizar item
-router.put("/:id", categoryModify);
+router.put("/:id", category.categoryModify);
 //Activar el estado de un item
-router.put("/enable/:id", stateEnable);
+router.put("/enable/:id", category.stateEnable);
 //Desactivar el estado de un item
-router.put("/disable/:id", stateDisable);
+router.put("/disable/:id", category.stateDisable);
 //Eliminar -> solo se desactiva
-router.delete("/delete/:id", categoryDelete);
+router.delete("/delete/:id", category.categoryDelete);
 
 export default router;
