@@ -3,7 +3,6 @@ import {
   userAdd,
   userGet,
   userUpdate,
-  userDelete,
   userGetById,
   stateEnable,
   stateDisable
@@ -18,8 +17,6 @@ router.get("/:id", userGetById);
 router.post("/", userAdd);
 //Modificar usuario
 router.put("/:id", userUpdate);
-//Eliminar usuario
-router.delete("/:id", userDelete);
 //Eliminar usuario
 router.put("/enable/:id", stateEnable);
 //Eliminar usuario

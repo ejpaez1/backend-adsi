@@ -21,8 +21,9 @@ const userGetById = async (req, res) => {
 };
 //Añadir usuario
 const userAdd = async (req, res) => {
-  const { name, email, password } = req.body;
-  const user = new userModel({ name, email, password });
+  const { name, email, password, rol } = req.body;
+  const user = new userModel({ name, email, password, rol });
+  //"El salt son el número de vueltas"
   user.password = bcrypt.hashSync(password, 10);
   await user.save();
   res.json({
@@ -40,14 +41,14 @@ const userUpdate = async (req, res) => {
     user,
   });
 };
-//Eliminar usuario
-const userDelete = async (req, res) => {
-  const { id } = req.params;
-  const user = await userModel.findByIdAndDelete(id);
-  res.json({
-    user,
-  });
-};
+// //Eliminar usuario
+// const userDelete = async (req, res) => {
+//   const { id } = req.params;
+//   const user = await userModel.findByIdAndDelete(id);
+//   res.json({
+//     user,
+//   });
+// };
 
 const stateEnable = async (req, res) => {
   const { id } = req.params;
@@ -65,4 +66,4 @@ const stateDisable = async (req, res) => {
   });
 };
 
-export { userGet, userGetById, userAdd, userUpdate, userDelete, stateEnable, stateDisable };
+export { userGet, userGetById, userAdd, userUpdate, stateEnable, stateDisable };
