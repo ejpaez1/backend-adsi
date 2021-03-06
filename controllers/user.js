@@ -40,7 +40,7 @@ const user = {
     const { _id, __v, state, createdAt, email, ...remains } = req.body;
     remains.password = bcrypt.hashSync(remains.password, 10);
     //1: buscar, 2: modificar
-    user = await userModel.findOneAndUpdate(id, remains);
+    const user = await userModel.findOneAndUpdate(id, remains);
     res.json({
       user,
     });
