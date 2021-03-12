@@ -1,5 +1,6 @@
 import userModel from "../models/user.js";
 import bcrypt from "bcrypt";
+import {generateJWT} from "../middlewares/token-jwt.js"
 
 const auth = {
   login: async (req, res) => {
@@ -12,15 +13,19 @@ const auth = {
         return res.status(400).json({
           message: "User not found",
         });
+      } else {
+        //Si el usuario existe y está activo evaluamos
+        const myPassword = bcrypt.compareSync(password, user.password);
+        if (!myPassword) {
+          return res.json({ message: "Wrong password" });
+        }
       }
-      //Si el usuario existe y está activo evaluamos
-      const myPassword = bcrypt.compareSync(password, user.password);
-      if (!myPassword) {
-        return res.json({ message: "Wrong password" });
-      }
+
+      const token = await generateJWT(user._id);
 
       res.json({
         user,
+        token,
       });
     } catch (error) {
       res.json({ message: error });
