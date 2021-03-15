@@ -1,42 +1,43 @@
 import { Router } from "express";
 import category from "../controllers/category.js";
 import { check } from "express-validator";
-import validationFields from "../middlewares/validations.js";
+import validations from "../middlewares/validations.js";
 import helpers from "../db-helpers/category.js";
-import {validateJWT} from "../middlewares/token-jwt.js";
+import tokens from "../middlewares/token-jwt.js";
 
 const router = Router();
 //Obtener información por medio de palabras de un item
-router.get("/", [validateJWT], category.categoryGet);
+router.get("/", [tokens.validateJWT], category.categoryGet);
 //Obtener información por medio del ID de un item
 router.get(
   "/:id",
   [
-    validateJWT,
+    tokens.validateJWT,
     check("id", "No es un ID válido").isMongoId(),
-    check("id").custom(helpers.existCategoryById),
-    validationFields,
+    check("id").custom(helpers.byId),
+    validations,
   ],
   category.categoryGetById
 );
-//Insertar item
+//Insertar categoria
 router.post(
   "/",
   [
-    check("name", "Name is require").not().isEmpty(),
-    check("name").custom(helpers.existCategoryByIdName),
-    validationFields,
+    check("name", "El nombre es requerido").not().isEmpty(),
+    check("description", "La descripción es requerida").not().isEmpty(),
+    check("name").custom(helpers.byName),
+    validations,
   ],
   category.categoryAdd
 );
-//Actualizar item
+//Actualizar categoria
 router.put(
   "/:id",
   [
+    tokens.validateJWT,
     check("id", "No es un ID válido").isMongoId(),
-    check("id").custom(helpers.existCategoryById),
-    check("name").custom(helpers.existCategoryByIdName),
-    validationFields,
+    check("id").custom(helpers.byId),
+    check("name").custom(helpers.name)
   ],
   category.categoryModify
 );
@@ -44,15 +45,29 @@ router.put(
 router.put(
   "/enable/:id",
   [
+    tokens.validateJWT,
     check("id", "No es un ID válido").isMongoId(),
-    check("id").custom(helpers.existCategoryById),
-    validationFields,
+    check("id").custom(helpers.byId),
+    validations,
   ],
   category.stateEnable
 );
-//Desactivar el estado de un item
-router.put("/disable/:id", category.stateDisable);
-//Eliminar -> solo se desactiva
-router.delete("/delete/:id", category.categoryDelete);
+//Desactivar categoria
+router.put(
+  "/disable/:id",
+  [
+    tokens.validateJWT,
+    check("id", "No es un ID válido").isMongoId(),
+    check("id").custom(helpers.byId),
+    validations,
+  ],
+  category.stateDisable
+);
 
+/* //Eliminar -> solo se desactiva
+router.delete("/delete/:id" [
+  check('id', 'No es un ID válido').isMongoId(),
+  check().custom(helpers.existCategoryByIdName)
+], category.categoryDelete);
+ */
 export default router;

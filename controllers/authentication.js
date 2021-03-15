@@ -1,6 +1,6 @@
 import userModel from "../models/user.js";
 import bcrypt from "bcrypt";
-import {generateJWT} from "../middlewares/token-jwt.js"
+import tokens from "../middlewares/token-jwt.js"
 
 const auth = {
   login: async (req, res) => {
@@ -21,7 +21,7 @@ const auth = {
         }
       }
 
-      const token = await generateJWT(user._id);
+      const token = await tokens.generateJWT(user._id);
 
       res.json({
         user,

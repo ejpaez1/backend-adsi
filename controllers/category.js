@@ -58,14 +58,14 @@ const category = {
       category,
     });
   },
-
+/* 
   categoryDelete: async (req, res) => {
     const { id } = req.params;
     const category = await categoryModel.findByIdAndDelete(id);
     res.json({
       category,
     });
-  },
+  }, */
 };
 
 export default category;
