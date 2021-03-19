@@ -2,7 +2,7 @@ import categoryModel from "../models/category.js";
 
 const category = {
   //Obtener
-  categoryGet: async (req, res) => {
+  get: async (req, res) => {
     const { value } = req.query;
     const category = await categoryModel
       .find({
@@ -17,7 +17,7 @@ const category = {
     });
   },
   //Obtener por ID
-  categoryGetById: async (req, res) => {
+  getById: async (req, res) => {
     const { id } = req.params;
     const category = await categoryModel.findOne({ _id: id });
     res.json({
@@ -25,7 +25,7 @@ const category = {
     });
   },
   //Insertar datos
-  categoryAdd: async (req, res) => {
+  add: async (req, res) => {
     const { name, description } = req.body;
     const category = new categoryModel({ name, description });
     await category.save();
@@ -34,7 +34,7 @@ const category = {
     });
   },
   //Modificar datos
-  categoryModify: async (req, res) => {
+  modify: async (req, res) => {
     const { id } = req.params;
     const { _id, createdAt, __v, state, ...remains } = req.body;
     const category = await categoryModel.findByIdAndUpdate(id, remains);
@@ -43,7 +43,7 @@ const category = {
     });
   },
 
-  stateEnable: async (req, res) => {
+  enable: async (req, res) => {
     const { id } = req.params;
     const category = await categoryModel.findByIdAndUpdate(id, { state: 1 });
     res.json({
@@ -51,7 +51,7 @@ const category = {
     });
   },
 
-  stateDisable: async (req, res) => {
+  disable: async (req, res) => {
     const { id } = req.params;
     const category = await categoryModel.findByIdAndUpdate(id, { state: 0 });
     res.json({

@@ -7,7 +7,7 @@ import tokens from "../middlewares/token-jwt.js";
 
 const router = Router();
 //Obtener información por medio de palabras de un item
-router.get("/", [tokens.validateJWT], category.categoryGet);
+router.get("/", [tokens.validateJWT], category.get);
 //Obtener información por medio del ID de un item
 router.get(
   "/:id",
@@ -17,7 +17,7 @@ router.get(
     check("id").custom(helpers.byId),
     validations,
   ],
-  category.categoryGetById
+  category.getById
 );
 //Insertar categoria
 router.post(
@@ -28,7 +28,7 @@ router.post(
     check("name").custom(helpers.byName),
     validations,
   ],
-  category.categoryAdd
+  category.add
 );
 //Actualizar categoria
 router.put(
@@ -39,7 +39,7 @@ router.put(
     check("id").custom(helpers.byId),
     check("name").custom(helpers.name)
   ],
-  category.categoryModify
+  category.modify
 );
 //Activar el estado de un item
 router.put(
@@ -50,7 +50,7 @@ router.put(
     check("id").custom(helpers.byId),
     validations,
   ],
-  category.stateEnable
+  category.enable
 );
 //Desactivar categoria
 router.put(
@@ -61,7 +61,7 @@ router.put(
     check("id").custom(helpers.byId),
     validations,
   ],
-  category.stateDisable
+  category.disable
 );
 
 /* //Eliminar -> solo se desactiva

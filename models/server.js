@@ -4,7 +4,10 @@ import mongoConnection from "../database/config.js";
 import category from "../routes/category.js";
 import user from "../routes/user.js";
 import authentication from "../routes/authentication.js";
-
+import article from "../routes/article.js"
+import person from "../routes/person.js"
+import sale from "../routes/sale.js"
+import shopping from "../routes/shopping.js"
 class Server {
   constructor() {
     //Definimos el puerto en una variable de entorno
@@ -22,6 +25,10 @@ class Server {
     this.app.use("/api/category", category);
     this.app.use("/api/user", user);
     this.app.use("/api/auth", authentication);
+    this.app.use("/api/article", article);
+    this.app.use("/api/person", person);
+    this.app.use("/api/sale", sale);
+    this.app.use("/api/shopping", shopping);
   }
 
   async myConnection() {
