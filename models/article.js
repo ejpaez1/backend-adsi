@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const articleSchema = mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Categories",
+    ref: "categories",
     required: true,
   },
   code: { type: String, required: true, maxlenght: 64, unique: true },
@@ -15,4 +15,4 @@ const articleSchema = mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Articles", articleSchema);
+export default mongoose.model("articles", articleSchema);

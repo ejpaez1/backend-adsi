@@ -24,4 +24,4 @@ const shoppingSchema = mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Shopping", shoppingSchema);
+export default mongoose.model("shopping", shoppingSchema);

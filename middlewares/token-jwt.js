@@ -9,7 +9,7 @@ const tokens = {
         payload,
         process.env.SECRETKEY,
         {
-          expiresIn: "4h",
+          expiresIn: "24h",
         },
         (err, token) => {
           if (err) {

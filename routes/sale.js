@@ -1,19 +1,75 @@
 import { Router } from "express";
 import sale from "../controllers/sale.js";
+import { check } from "express-validator";
+import tokens from "../middlewares/token-jwt.js";
+import validations from "../middlewares/validations.js";
+import helpers from "../db-helpers/sale.js";
 
 const router = Router();
 
-/* //Obtener información por medio de palabras de un item
-router.get("/", sale.categoryGet);
-//Obtener información por medio del ID de un item
-router.get("/:id", sale.categoryGetById);
-//Insertar categoria
-router.post("/", sale.categoryAdd);
-//Actualizar categoria
-router.put("/:id", sale.categoryModify);
-//Activar el estado de un item
-router.put("/enable/:id", sale.stateEnable);
-//Desactivar categoria
-router.put("/disable/:id", sale.stateDisable);
- */
+router.get("/", [tokens.validateJWT], sale.get);
+
+router.get(
+  "/:id",
+  [
+    tokens.validateJWT,
+    check("id", "No es un ID válido").isMongoId(),
+    check("id").custom(helpers.byId),
+    validations,
+  ],
+  sale.getById
+);
+router.post(
+  "/",
+  [
+    tokens.validateJWT,
+    check("user", "Tipo persona es requerido").not().isEmpty(),
+    check("person", "Nombre es requerido").not().isEmpty(),
+    check("typeProof", "Documento es requerido").not().isEmpty(),
+    check("serieProof", "ID Documento es requerida").not().isEmpty(),
+    check("numProof", "Dirección es requerido").not().isEmpty(),
+    check("total", "Dirección es requerido").not().isEmpty(),
+    check("tax", "Celular es requerido").not().isEmpty(),
+    check("details", "E-mail es requerido").not().isEmpty(),
+/*     check("idDocument").custom(helpers.byIdDocument),
+    check("phone").custom(helpers.byPhone),
+    check("email").custom(helpers.byEmail), */
+    validations,
+  ],
+  sale.add
+);
+router.put(
+  "/:id",
+  [
+    tokens.validateJWT,
+    check("id", "No es un ID válido").isMongoId(),
+    check("id").custom(helpers.byId),
+    check("idDocument").custom(helpers.byIdDocument),
+    check("phone").custom(helpers.byPhone),
+    check("email").custom(helpers.byEmail),
+    validations
+  ],
+  sale.modify
+);
+router.put(
+  "/enable/:id",
+  [
+    tokens.validateJWT,
+    check("id", "No es un ID válido").isMongoId(),
+    check("id").custom(helpers.byId),
+    validations,
+  ],
+  sale.enable
+);
+router.put(
+  "/disable/:id",
+  [
+    tokens.validateJWT,
+    check("id", "No es un ID válido").isMongoId(),
+    check("id").custom(helpers.byId),
+    validations,
+  ],
+  sale.disable
+);
+
 export default router;

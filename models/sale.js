@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const saleSchema = mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "Users", required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true },
   person: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Persons",
+    ref: "persons",
     required: true,
   },
   typeProof: { type: String, required: true, maxlength: 20 },
@@ -25,4 +25,4 @@ const saleSchema = mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Sales", saleSchema);
+export default mongoose.model("sales", saleSchema);

@@ -6,9 +6,7 @@ import helpers from "../db-helpers/category.js";
 import tokens from "../middlewares/token-jwt.js";
 
 const router = Router();
-//Obtener información por medio de palabras de un item
 router.get("/", [tokens.validateJWT], category.get);
-//Obtener información por medio del ID de un item
 router.get(
   "/:id",
   [
@@ -19,10 +17,10 @@ router.get(
   ],
   category.getById
 );
-//Insertar categoria
 router.post(
   "/",
   [
+    tokens.validateJWT,
     check("name", "El nombre es requerido").not().isEmpty(),
     check("description", "La descripción es requerida").not().isEmpty(),
     check("name").custom(helpers.byName),
@@ -30,18 +28,16 @@ router.post(
   ],
   category.add
 );
-//Actualizar categoria
 router.put(
   "/:id",
   [
     tokens.validateJWT,
     check("id", "No es un ID válido").isMongoId(),
     check("id").custom(helpers.byId),
-    check("name").custom(helpers.name)
+    check("name").custom(helpers.byName)
   ],
   category.modify
 );
-//Activar el estado de un item
 router.put(
   "/enable/:id",
   [
@@ -52,7 +48,6 @@ router.put(
   ],
   category.enable
 );
-//Desactivar categoria
 router.put(
   "/disable/:id",
   [
@@ -63,11 +58,4 @@ router.put(
   ],
   category.disable
 );
-
-/* //Eliminar -> solo se desactiva
-router.delete("/delete/:id" [
-  check('id', 'No es un ID válido').isMongoId(),
-  check().custom(helpers.existCategoryByIdName)
-], category.categoryDelete);
- */
 export default router;

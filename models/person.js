@@ -1,11 +1,7 @@
 import mongoose from "mongoose";
 
 const personSchema = mongoose.Schema({
-  typePerson: {
-    type: String,
-    required: true,
-    maxlength: 10,
-  },
+  typePerson: {type: String, required: true,maxlength: 10},
   name: { type: String, required: true, maxlength: 50 },
   document: { type: String, maxlength: 30, required: true },
   idDocument: { type: String, maxlength: 20, required: true, unique: true },
@@ -16,4 +12,4 @@ const personSchema = mongoose.Schema({
   createAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Persons", personSchema);
+export default mongoose.model("persons", personSchema);
