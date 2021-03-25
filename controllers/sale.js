@@ -1,12 +1,15 @@
 import saleModel from "../models/sale.js";
+import modifyStock from "../db-helpers/modifyStock.js"
 
 const sale = {
+  //Obtener
   get: async (req, res) => {
     const { value } = req.query;
-    const sale = await saleModel.find({
+    const sale = await saleModel
+      .find({
         $or: [
-          { name: new RegExp(value, "i") },
-          { description: new RegExp(value, "i") },
+          { typeProof: new RegExp(value, "i") },
+          { numProof: new RegExp(value, "i") },
         ],
       })
       .sort({ createdAt: -1 })
@@ -50,32 +53,31 @@ const sale = {
       details,
     });
 
+    //total
+    sale.total = sale.details.reduce((acc, article) => acc + (article.quantity * article.price), 0)
+    //tax
+    sale.tax = sale.total * 0.19
+    if(details.discount) {
+      sale.total = sale.total - sale.details.discount
+    }
     await sale.save();
+    details.map((article) => modifyStock.disminuirStock(article._id,article.quantity))
     res.status(200).json({
       sale,
     });
   },
-  //Modificar datos
-  modify: async (req, res) => {
-    const { id } = req.params;
-    const { _id, createdAt, __v, state, ...remains } = req.body;
-    const sale = await saleModel.findByIdAndUpdate(id, remains);
-    res.json({
-      sale,
-    });
-  },
-
   enable: async (req, res) => {
     const { id } = req.params;
     const sale = await saleModel.findByIdAndUpdate(id, { state: 1 });
+    sale.details.map((article) => modifyStock.disminuirStock(article._id,article.quantity))
     res.json({
       sale,
     });
   },
-
   disable: async (req, res) => {
     const { id } = req.params;
     const sale = await saleModel.findByIdAndUpdate(id, { state: 0 });
+    sale.details.map((article) => modifyStock.aumentarStock(article._id,article.quantity))
     res.json({
       sale,
     });

@@ -34,7 +34,8 @@ router.put(
     tokens.validateJWT,
     check("id", "No es un ID válido").isMongoId(),
     check("id").custom(helpers.byId),
-    check("name").custom(helpers.byName)
+    check("name").custom(helpers.byName),
+    validations
   ],
   category.modify
 );
