@@ -54,12 +54,10 @@ const sale = {
     });
 
     //total
-    sale.total = sale.details.reduce((acc, article) => acc + (article.quantity * article.price), 0)
+    sale.total = sale.details.reduce((acc, article) => acc + ((article.quantity * article.price) - article.discount), 0) 
     //tax
     sale.tax = sale.total * 0.19
-    if(details.discount) {
-      sale.total = sale.total - sale.details.discount
-    }
+
     await sale.save();
     details.map((article) => modifyStock.disminuirStock(article._id,article.quantity))
     res.status(200).json({
